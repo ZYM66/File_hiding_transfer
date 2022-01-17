@@ -13,7 +13,6 @@ def encipherment():
     with open(name_file, 'rb') as f:
         data = f.read()
         data_len = len(data)
-        txt_data = bytearray(data)
 
     with wave.open(name_carrier, 'rb') as f:
         infomap['channels'] = f.getnchannels()
