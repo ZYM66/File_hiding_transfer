@@ -1,5 +1,7 @@
 import wave
 import base64
+from tqdm import tqdm
+import time
 
 
 def decode():
@@ -21,12 +23,13 @@ def decode():
     with wave.open(encode_file, 'rb') as f:
         data = f.readframes(-1)
 
-
     with open('./output/提取文件.txt', 'wb') as f:
-        for i in range(infomap['len']):
+        for i in tqdm(range(infomap['len'])):
             extract_data.append(data[i * infomap['gap']])
+        time.sleep(0.5)
         f.write(bytearray(extract_data))
     print('已经提取到output文件夹内')
+
 
 if __name__ == '__main__':
     decode()

@@ -1,6 +1,8 @@
 import base64
 import random
 import wave
+from tqdm import tqdm
+import time
 
 
 def encipherment():
@@ -24,17 +26,22 @@ def encipherment():
         infomap['framerate']) + str(gap)).encode('utf-8'))
     base_key = base64.b64encode(infolist)
 
-    with wave.open(name + '.wav', 'wb') as w:
+    with wave.open('./Hidden_file/' + name + '.wav', 'wb') as w:
         w.setnchannels(infomap['channels'])
         w.setsampwidth(infomap['sampwidth'])
         w.setframerate(infomap['framerate'])
         try:
-            for i in range(data_len):
+            for i in tqdm(range(data_len)):
                 wave_data[i * gap] = data[i]
             w.writeframes(wave_data)
-            print('你的key:' + str(base_key)[1:])
+            time.sleep(0.5)
+            print('你的key(不含单引号):' + str(base_key)[1:])
         except:
             print('错误，请换更大的载体文件！')
+
+    with open('./Hidden_file/' + name + '.txt', 'w') as w:
+        text = '隐藏文件名称:' + name + '\n你的key为:' + str(base_key)[1:] + '(不含单引号)'
+        w.write(text)
 
 
 if __name__ == '__main__':
